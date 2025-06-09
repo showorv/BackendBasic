@@ -12,20 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-require("dotenv/config");
-let server;
-const port = 3000;
-// const bootstrap = async()=>{
-//    connectDB().then(()=>{
-//     server = app.listen(port, () => {
-//       console.log(`Example app listening on port ${port}`)
-//     })
-//    }) 
-// }
-const bootstrap = () => __awaiter(void 0, void 0, void 0, function* () {
-    server = app_1.default.listen(port, () => {
-        console.log(`Example app listening on port ${port}`);
-    });
+const mongoose_1 = __importDefault(require("mongoose"));
+const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const uri = process.env.MONGODB_URI;
+        if (!uri) {
+            throw new Error("MONGODB_URI is not defined in environment variables");
+        }
+        yield mongoose_1.default.connect(uri);
+        console.log("Mongodb connected successfully");
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            console.error("MongoDB connection failed:", error.message);
+        }
+        else {
+            console.error("MongoDB connection failed with unknown error:", error);
+        }
+        process.exit(1);
+    }
 });
-bootstrap();
+exports.default = connectDB;

@@ -5,7 +5,17 @@ const app:Application = express()
 
 
 app.get('/', (req:Request, res: Response) => {
-  res.send('Hello World!')
+  res.send('I am learning again')
+})
+
+// params 
+app.get('/todo/:id', (req:Request, res: Response) => {
+  res.send('I am learning again')
+})
+
+//query =??/ https://api/todo?title=prisma&body=hello
+app.get('/todo', (req:Request, res: Response) => {
+  res.send('I am learning again')
 })
 
 
